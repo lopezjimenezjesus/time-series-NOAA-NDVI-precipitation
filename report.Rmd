@@ -1,0 +1,131 @@
+---
+title: "Time series of NOAA NDVI satellite images to assess environmental change"
+output:
+  pdf_document: default
+  html_notebook: default
+subtitle: Practical Exercise 14
+author: Jesus Jimenez Lopez (je5744ji-s)
+bibliography: references.bib
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.pos = 'H')
+```
+## Task 1
+
+**Extract NDVI values for all climate stations for the full 19-year period. Recalculate DN values to NDVI and calculate the slope of the linear NDVI trend line for each climate station in e.g. Excel. Provide a bar graph showing the NDVI trend for each climate station with the station name as the x-label.**
+
+```{r echo=FALSE, include=FALSE}
+require(knitr)
+require(kableExtra)
+```
+
+
+```{r echo=FALSE}
+include_graphics('task1.png')
+```
+
+
+**Task 2. Produce a time series graph (year on the x-axis) for the station showing the highest positive linear trend of NDVI and include the trend line equation and R 2 . What land cover type surrounds this station?**
+
+```{r echo=FALSE, fig.cap= "Kulun Station. Land cover = Piairie and grassland"}
+include_graphics('task2.png')
+```
+
+**Task 3. What is the highest positive gain value of NDVI in the image? Additionally describe what the gain value means in simple words understandable to a non-scientific person.**
+
+The highest positive gain is 0.019. This value shows the amount of change in NDVI expected in a year.
+
+**Task 4. If a pixel in 1982 had a value of 0.25, what would be the NDVI value for this pixel in 2010 if it followed the linear trend (task 3)?**
+
+Considering a gain of 0.019, the expected values would be 27*0.019 + 0.25 = 0.763
+
+
+**Task 5. How do the trends correspond to Land Use? Are changes equal between different LU- categories on average? The gain coefficients in each pixel may be grouped based on a polygon layer of some sort. This could be administrative boundaries e.g. but in our case it is important to analyze if some LU categories (e.g. grassland, forest) have different NDVI trends on average. We may then find out that NDVI is decreasing/increasing in some LU- categories on average. The answer to this can be given by a Zonal statistics analysis. ArcGIS can read and calculate statistics for cell values (gain values) under certain polygons. As you have been given a LU polygon layer you should now analyze this and use only the major LU type in the Land Use layer provided. Copy the graph showing mean gain for each LU type that is produced by the zonal statistics tool into your report document, and write some sentences where you draw some conclusions or explanations based on the appearance.**
+
+
+```{r echo=FALSE, out.width = "100%"}
+include_graphics('task5.png')
+```
+
+**Task 6. For each LU type, how many NOAA pixels were used to calculate this zonal statistics?**
+
+
+```{r echo =FALSE}
+lu <- c("Forest, bush", "Grassland","Agriculture ", "Unused", "Water", "Urban/industrial")
+value <- c(9788, 29296, 18635, 10117, 148, 61)
+df <- data.frame("Land Use" = lu, "Nº Pixels" = value)
+```
+
+```{r echo=FALSE}
+kable(df)
+
+```
+
+**Task 7. What correlation do you get between rainfall and NDVI at these 5 climate stations? Is the variability in NDVI caused by a high variability in annual rainfall at the sites? Paste your correlation graphs into your report document.**
+
+Stations were selected randomly.  To measure correlation, months from January to September were selected
+
+
+```{r echo=FALSE, out.width = "100%"}
+myimages<-list.files(".", pattern = "^task7_", full.names = TRUE)
+include_graphics(myimages)
+```
+
+Correlation is none or very weak for all stations. Jarud station is sited on a desert, where vegetation is null or very scarce. The negative correlation could be due to moisture conditions, as water absorb NIR wavelengths [@Runnstrom2000]. However, Linxi station,  despite been placed on a desert also,  show a slightly positive pattern.
+
+Considering the cases, we cannot assert that rainfall variability is correlated with  NDVI.
+
+**Task 8. Where are the highest and lowest variability for the pixels in the time series?**
+
+Based on DN, the highest variability is found in urban/industrial areas ( sd(ND) = 8.461582; sd(NDVI)= 0.067693) , followed by agricultural areas (sd= 7.217166, sd(NDVI) = 0.057737). Grassland and unused areas show a lower variability with values ranging from 6.65 (0.053218)  to 4.9 (0.031987).
+
+**Task 9. Produce two nice cartographically correct maps (including grid, legend, scale bar etc.) for NDVI trend and NDVI standard deviation. Include some background layers such as province borders, the climate stations etc.**
+
+NDVI Linear Trend use DN (not scaled)
+
+NDVI Variability use NDVI 
+
+
+```{r echo=FALSE, out.width = "100%"}
+include_graphics('map_ndvi_sd.jpg')
+```
+
+```{r echo=FALSE, out.width = "100%"}
+include_graphics('map_ndvi_sd.jpg')
+```
+
+**Task 10. Elaborate on the main aim of this exercise. Discuss according to your results and findings whether land degradation seems to be a severe problem in northern China.**
+
+Precipitation follow a 
+
+```{r echo=FALSE, out.width = "100%"}
+include_graphics('precipitation.png')
+```
+
+
+
+Overall the NDVI linear trend is positive, particularly in vegetated areas.  Notwithstanding, considering the stations selected, the correlation with rainfall is weak. Our sampling method should have been based on land uses (stratified sampling), ensuring that main patterns were captured. As a result, we included a new station lying within irrigated areas.
+
+```{r echo=FALSE, out.width = "100%"}
+include_graphics('task7_Chifeng.png')
+```
+
+We found that mean NDVI values along the time series in desert areas are higher than in bush and grassland, which is counterintuitive.  
+
+
+```{r echo=FALSE, out.width = "100%"}
+include_graphics('task10_rain_vs_ndvi_station.png')
+```
+
+This pattern can be observed also per station. 
+
+```{r echo=FALSE, out.width = "100%"}
+include_graphics('ndvi_trend.png')
+```
+
+Based on this preliminary result, we cannot establish a 
+
+
+
+## References

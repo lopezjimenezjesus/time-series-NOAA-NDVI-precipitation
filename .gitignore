@@ -1,0 +1,16 @@
+*.t*
+*.png
+*.jpg
+*.s*
+*.txt
+*.ini
+*.prj
+*.xls
+nd_mean/
+*.cpg
+*.dbf
+*.atx
+info/
+*.csv
+*.html
+map*
