@@ -1,8 +1,6 @@
-*.t*
 *.png
 *.jpg
 *.s*
-*.txt
 *.ini
 *.prj
 *.xls
@@ -13,4 +11,9 @@ nd_mean/
 info/
 *.csv
 *.html
+*.xml
+*.ti*
+*.tfw
+*.tbx
+*.old
 map*
